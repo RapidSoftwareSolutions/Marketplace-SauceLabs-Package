@@ -22,7 +22,7 @@ $app->post('/api/SauceLabs/stopJob', function ($request, $response) {
     
 
     $client = $this->httpClient;
-    $query_str = "https://saucelabs.com/rest/v1/users/{$data['username']}/jobs/{$data['jobId']}/stop";
+    $query_str = "https://saucelabs.com/rest/v1/{$data['username']}/jobs/{$data['jobId']}/stop";
 
     
 
