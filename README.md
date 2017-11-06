@@ -1,4 +1,4 @@
-[![](https://scdn.rapidapi.com/RapidAPI_banner.png)](https://rapidapi.com/package/Sqreen/functions?utm_source=RapidAPIGitHub_SqreenFunctions&utm_medium=button&utm_content=RapidAPI_GitHub)
+[![](https://scdn.rapidapi.com/RapidAPI_banner.png)](https://rapidapi.com/package/SauceLabs/functions?utm_source=RapidAPIGitHub_SauceLabsFunctions&utm_medium=button&utm_content=RapidAPI_GitHub)
 
 # SauceLabs Package
 Accelerate your software development and bring your great ideas to market faster with the world's largest automated testing cloud for web and mobile apps.
