@@ -22,7 +22,7 @@ $app->post('/api/SauceLabs/getJobAssets', function ($request, $response) {
     
 
     $client = $this->httpClient;
-    $query_str = "https://saucelabs.com/rest/v1/users/{$data['username']}/jobs/{$data['jobId']}/assets";
+    $query_str = "https://saucelabs.com/rest/v1/{$data['username']}/jobs/{$data['jobId']}/assets";
 
     
 
