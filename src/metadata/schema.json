@@ -691,6 +691,24 @@
           "required": true
         },
         {
+          "name": "from",
+          "type": "DatePicker",
+          "info": "Get jobs since the specified time",
+          "required": false,
+          "vendorSchema": {
+            "format": "toFormat:{unixtime}"
+          }
+        },
+        {
+          "name": "to",
+          "type": "DatePicker",
+          "info": "Get jobs until the specified time",
+          "required": false,
+          "vendorSchema": {
+            "format": "toFormat:{unixtime}"
+          }
+        },
+        {
           "name": "limit",
           "type": "Number",
           "info": "Specifies the number of jobs to return.",
@@ -711,24 +729,6 @@
           ],
           "info": "Get full job information, rather than just IDs.",
           "required": false
-        },
-        {
-          "name": "from",
-          "type": "DatePicker",
-          "info": "Get jobs since the specified time",
-          "required": false,
-          "vendorSchema": {
-            "format": "toFormat:{unixtime}"
-          }
-        },
-        {
-          "name": "to",
-          "type": "DatePicker",
-          "info": "Get jobs until the specified time",
-          "required": false,
-          "vendorSchema": {
-            "format": "toFormat:{unixtime}"
-          }
         }
       ],
       "vendorRequest": {

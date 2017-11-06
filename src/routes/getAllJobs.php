@@ -25,7 +25,7 @@ $app->post('/api/SauceLabs/getAllJobs', function ($request, $response) {
     $data['to'] = \Models\Params::toFormat($data['to'], 'unixtime'); 
 
     $client = $this->httpClient;
-    $query_str = "https://saucelabs.com/rest/v1/users/{$data['username']}/jobs";
+    $query_str = "https://saucelabs.com/rest/v1/{$data['username']}/jobs";
 
     $data['format'] = 'json';
 
