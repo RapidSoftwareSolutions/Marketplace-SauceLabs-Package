@@ -33,6 +33,9 @@ $app->post('/api/SauceLabs/getAllJobs', function ($request, $response) {
     $requestParams['headers'] = [];
     $requestParams["auth"] = [$data['username'],$data['accessKey']];
 
+    echo $query_str;
+    exit();
+
     try {
         $resp = $client->get($query_str, $requestParams);
         $responseBody = $resp->getBody()->getContents();

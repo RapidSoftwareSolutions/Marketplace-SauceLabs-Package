@@ -29,6 +29,7 @@ $app->post('/api/SauceLabs/createSubaccount', function ($request, $response) {
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = [];
+    $requestParams['json']['username'] = $data['subAccountUsername'];
     $requestParams["auth"] = [$data['username'],$data['accessKey']];
 
     try {

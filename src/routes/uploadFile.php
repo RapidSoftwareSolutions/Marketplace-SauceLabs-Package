@@ -24,16 +24,24 @@ $app->post('/api/SauceLabs/uploadFile', function ($request, $response) {
     $client = $this->httpClient;
     $query_str = "https://saucelabs.com/rest/v1/storage/{$data['username']}/{$data['filename']}?overwrite";
 
-    
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = [];
     $requestParams["auth"] = [$data['username'],$data['accessKey']];
 
-    try {
-        $resp = $client->post($query_str, $requestParams);
-        $responseBody = $resp->getBody()->getContents();
 
+    try {
+        $resp = $client->post($query_str, [
+            'auth' => $requestParams["auth"],
+            'multipart' => [
+                [
+                    'name'     => 'file',
+                    'contents' => fopen($data['fileData'], 'r'),
+                    'filename' => $data['filename']
+                ]
+            ]
+        ]);
+        $responseBody = $resp->getBody();
         if(in_array($resp->getStatusCode(), ['200', '201', '202', '203', '204'])) {
             $result['callback'] = 'success';
             $result['contextWrites']['to'] = is_array($responseBody) ? $responseBody : json_decode($responseBody);
@@ -45,9 +53,7 @@ $app->post('/api/SauceLabs/uploadFile', function ($request, $response) {
             $result['contextWrites']['to']['status_code'] = 'API_ERROR';
             $result['contextWrites']['to']['status_msg'] = json_decode($responseBody);
         }
-
     } catch (\GuzzleHttp\Exception\ClientException $exception) {
-
         $responseBody = $exception->getResponse()->getBody()->getContents();
         if(empty(json_decode($responseBody))) {
             $out = $responseBody;
@@ -57,9 +63,7 @@ $app->post('/api/SauceLabs/uploadFile', function ($request, $response) {
         $result['callback'] = 'error';
         $result['contextWrites']['to']['status_code'] = 'API_ERROR';
         $result['contextWrites']['to']['status_msg'] = $out;
-
     } catch (GuzzleHttp\Exception\ServerException $exception) {
-
         $responseBody = $exception->getResponse()->getBody()->getContents();
         if(empty(json_decode($responseBody))) {
             $out = $responseBody;
@@ -69,14 +73,11 @@ $app->post('/api/SauceLabs/uploadFile', function ($request, $response) {
         $result['callback'] = 'error';
         $result['contextWrites']['to']['status_code'] = 'API_ERROR';
         $result['contextWrites']['to']['status_msg'] = $out;
-
     } catch (GuzzleHttp\Exception\ConnectException $exception) {
+        $responseBody = $exception->getResponse()->getBody(true);
         $result['callback'] = 'error';
         $result['contextWrites']['to']['status_code'] = 'INTERNAL_PACKAGE_ERROR';
         $result['contextWrites']['to']['status_msg'] = 'Something went wrong inside the package.';
-
     }
-
     return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($result);
-
 });

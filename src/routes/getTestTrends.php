@@ -4,7 +4,7 @@ $app->post('/api/SauceLabs/getTestTrends', function ($request, $response) {
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['username','accessKey','interval']);
+    $validateRes = $checkRequest->validate($request, ['username','accessKey','interval','start','end']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -12,20 +12,19 @@ $app->post('/api/SauceLabs/getTestTrends', function ($request, $response) {
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['username'=>'username','accessKey'=>'accessKey','interval'=>'interval'];
+    $requiredParams = ['username'=>'username','accessKey'=>'accessKey','interval'=>'interval','start'=>'start','end'=>'end'];
     $optionalParams = ['os'=>'os','browser'=>'browser'];
     $bodyParams = [
-       'query' => ['interval','os','browser']
+       'query' => ['interval','os','browser','start','end']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
-
+    $data['start'] = \Models\Params::toFormat($data['start'], 'c');
+    $data['end'] = \Models\Params::toFormat($data['end'], 'c');
     
 
     $client = $this->httpClient;
     $query_str = "https://saucelabs.com/rest/v1/analytics/trends/tests";
-
-    
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = [];

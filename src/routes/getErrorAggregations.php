@@ -4,7 +4,7 @@ $app->post('/api/SauceLabs/getErrorAggregations', function ($request, $response)
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['username','accessKey']);
+    $validateRes = $checkRequest->validate($request, ['username','accessKey','start','end']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -12,14 +12,16 @@ $app->post('/api/SauceLabs/getErrorAggregations', function ($request, $response)
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['username'=>'username','accessKey'=>'accessKey'];
+    $requiredParams = ['username'=>'username','accessKey'=>'accessKey','start'=>'start','end'=>'end'];
     $optionalParams = ['os'=>'os','browser'=>'browser'];
     $bodyParams = [
-       'query' => ['os','browser']
+       'query' => ['os','browser','start','end']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
+    $data['start'] = \Models\Params::toFormat($data['start'], 'c');
+    $data['end'] = \Models\Params::toFormat($data['end'], 'c');
     
 
     $client = $this->httpClient;
