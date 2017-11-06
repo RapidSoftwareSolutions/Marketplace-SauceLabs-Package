@@ -15,7 +15,7 @@ $app->post('/api/SauceLabs/getAllSubAccounts', function ($request, $response) {
     $requiredParams = ['username'=>'username','accessKey'=>'accessKey'];
     $optionalParams = ['from'=>'from','limit'=>'limit'];
     $bodyParams = [
-       'query' => ['from','number']
+       'query' => ['from','limit']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
