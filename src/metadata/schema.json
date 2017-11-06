@@ -1,0 +1,1280 @@
+{
+    "package": "SauceLabs",
+    "tagline": "SauceLabs API",
+    "description": "Accelerate your software development and bring your great ideas to market faster with the world's largest automated testing cloud for web and mobile apps.",
+    "image": "https://logo.clearbit.com/saucelabs.com",
+    "repo": "https://github.com/RapidSoftwareSolutions/Marketplace-SauceLabs-Package",
+    "keywords": [
+        "API",
+        "saucelabs",
+        "testing",
+        "selenium",
+        "mobile",
+        "web"
+    ],
+    "accounts": {
+        "domain": "https://saucelabs.com/",
+        "credentials": [
+            "username",
+            "accessKey"
+        ]
+    },
+    "steps": [
+        "Sign in https://saucelabs.com",
+        "Navigate to User Profile -> User Settings section of your Sauce Labs dashboard.",
+        "Copy Your Username and Access Key"
+    ],
+    "blocks": [
+        {
+            "name": "getUser",
+            "description": "Access basic account information",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "createSubaccount",
+            "description": "Create a sub account.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "subAccountUsername",
+                    "type": "String",
+                    "info": "Username of sub-account user",
+                    "required": true
+                },
+                {
+                    "name": "password",
+                    "type": "String",
+                    "info": "Password of sub-account user",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "info": "Full name of sub-account user",
+                    "required": true
+                },
+                {
+                    "name": "email",
+                    "type": "String",
+                    "info": "Email of sub-account user",
+                    "required": true
+                },
+                {
+                    "name": "concurrency",
+                    "type": "Number",
+                    "info": "Concurrency limit for the sub-account user",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}",
+                "method": "post",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "password",
+                            "name",
+                            "email",
+                            "concurrency"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "getAllSubAccounts",
+            "description": "Get a list of sub accounts associated with a parent account.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "from",
+                    "type": "Number",
+                    "info": "Pagination param",
+                    "required": false
+                },
+                {
+                    "name": "limit",
+                    "type": "Number",
+                    "info": "Number of results to return",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}/list-subaccounts",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "from",
+                            "number"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "getSubaccountsInformation",
+            "description": "Get information about a sub accounts.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}/subaccounts",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "getAllSiblingAccounts",
+            "description": "Get a list of sibling accounts associated with provided account.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "page",
+                    "type": "Number",
+                    "info": "Pagination param",
+                    "required": false
+                },
+                {
+                    "name": "perPage",
+                    "type": "Number",
+                    "info": "Number of results to return",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "per_page"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}/siblings",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "page",
+                            "per_page"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "updateAccessKey",
+            "description": "Change access key of your account.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}/accesskey/change",
+                "method": "post",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "getTestTrends",
+            "description": "Return various test metrics divided into buckets. A bucket contains data grouped by an interval specified in query params.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "interval",
+                    "type": "String",
+                    "info": "Specifies a length of a bucket in the response. Allowed units: d \u2013 day, h \u2013 hour, m \u2013 minute, s \u2013 second. Minimal interval is `5s`, i.e. 5 seconds.",
+                    "required": true
+                },
+                {
+                    "name": "os",
+                    "type": "String",
+                    "info": "Specifies values for the OS filter.",
+                    "required": false
+                },
+                {
+                    "name": "browser",
+                    "type": "String",
+                    "info": "Specifies values for the Browser filter.",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/analytics/trends/tests",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "interval",
+                            "os",
+                            "browser"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "getErrorAggregations",
+            "description": "Aggregate all errors that occurred in a given time range.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "os",
+                    "type": "String",
+                    "info": "Specifies values for the OS filter.",
+                    "required": false
+                },
+                {
+                    "name": "browser",
+                    "type": "String",
+                    "info": "Specifies values for the Browser filter.",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/analytics/trends/errors",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "os",
+                            "browser"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "buildsAndTestsStatistics",
+            "description": "Aggregate all tests into builds and tests without build. Maximum number of returned builds is 25.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "os",
+                    "type": "String",
+                    "info": "Specifies values for the OS filter.",
+                    "required": false
+                },
+                {
+                    "name": "browser",
+                    "type": "String",
+                    "info": "Specifies values for the Browser filter.",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/analytics/trends/builds_tests",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "os",
+                            "browser"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "getTestList",
+            "description": "This endpoint is useful if one would like to retrieve more results from the above aggregations.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "error",
+                    "type": "String",
+                    "info": "Value of a test error field.",
+                    "required": false
+                },
+                {
+                    "name": "build",
+                    "type": "String",
+                    "info": "Value of a test build field.",
+                    "required": false
+                },
+                {
+                    "name": "from",
+                    "type": "Number",
+                    "info": "Item position from which data should be returned.",
+                    "required": false
+                },
+                {
+                    "name": "size",
+                    "type": "Number",
+                    "info": "Number of items to return.",
+                    "required": false
+                },
+                {
+                    "name": "missingBuild",
+                    "type": "String",
+                    "info": "Returns only tests without a build.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "missing_build"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/analytics/tests",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "error",
+                            "build",
+                            "from",
+                            "size",
+                            "missing_build"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "startJsUnitTest",
+            "description": "Start your JavaScript unit tests on as many browsers as you like with a single request.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "platforms",
+                    "type": "List",
+                    "info": "An array of desktop platforms.",
+                    "required": true,
+                    "structure": {
+                        "name": "platform",
+                        "type": "String",
+                        "info": "Single platform",
+                        "required": true
+                    }
+                },
+                {
+                    "name": "url",
+                    "type": "String",
+                    "info": "Should point to the page that hosts your tests.",
+                    "required": true
+                },
+                {
+                    "name": "framework",
+                    "type": "Select",
+                    "options": [
+                        "qunit",
+                        "jasmine",
+                        "YUI Test",
+                        "mocha",
+                        "custom"
+                    ],
+                    "info": "Can be 'qunit', 'jasmine', 'YUI Test', 'mocha', or 'custom'.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/{$data['username']}/js-tests",
+                "method": "post",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "platforms",
+                            "url",
+                            "framework"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "getJsUnitTestStatus",
+            "description": "Get the status of your JS unit tests.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "jsTests",
+                    "type": "List",
+                    "info": "An array of job ids which you would like the status of",
+                    "required": true,
+                    "structure": {
+                        "name": "id",
+                        "type": "String",
+                        "info": "Job id",
+                        "required": true
+                    },
+                    "vendorSchema": {
+                        "name": "js tests"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/{$data['username']}/js-tests/status",
+                "method": "post",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "js tests"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "getAllJobs",
+            "description": "List recent jobs belonging to a specific user.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "limit",
+                    "type": "Number",
+                    "info": "Specifies the number of jobs to return.",
+                    "required": false
+                },
+                {
+                    "name": "skip",
+                    "type": "Numer",
+                    "info": "Skips the specified number of jobs",
+                    "required": false
+                },
+                {
+                    "name": "full",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Get full job information, rather than just IDs.",
+                    "required": false
+                },
+                {
+                    "name": "from",
+                    "type": "DatePicker",
+                    "info": "Get jobs since the specified time",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{unixtime}"
+                    }
+                },
+                {
+                    "name": "to",
+                    "type": "DatePicker",
+                    "info": "Get jobs until the specified time",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{unixtime}"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}/jobs",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                },
+                "vendorFieldsStructure": [
+                    {
+                        "format": "json"
+                    }
+                ],
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "limit",
+                            "skip",
+                            "full",
+                            "from",
+                            "to",
+                            "format"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "updateJob",
+            "description": "Edit an existing job.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "jobId",
+                    "type": "String",
+                    "info": "Job id",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "info": "If specified change the job name",
+                    "required": false
+                },
+                {
+                    "name": "tags",
+                    "type": "List",
+                    "info": "If present set tags for job",
+                    "required": false,
+                    "structure": {
+                        "name": "tag",
+                        "type": "String",
+                        "info": "Single tag",
+                        "required": false
+                    }
+                },
+                {
+                    "name": "public",
+                    "type": "String",
+                    "info": "Set job visibility",
+                    "required": false
+                },
+                {
+                    "name": "passed",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Set whether the job passed or not on the user end",
+                    "required": false
+                },
+                {
+                    "name": "build",
+                    "type": "String",
+                    "info": "The build name for this test.",
+                    "required": false
+                },
+                {
+                    "name": "customData",
+                    "type": "JSON",
+                    "info": "Extra key-value pairs with any info that a user would like to add to the job.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "custom-data"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}/jobs/{$data['jobId']}",
+                "method": "put",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "name",
+                            "tags",
+                            "public",
+                            "passed",
+                            "build",
+                            "custom-data"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "deleteJob",
+            "description": "Removes the job from the system with all the linked assets.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "jobId",
+                    "type": "String",
+                    "info": "Job id",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}/jobs/{$data['jobId']}",
+                "method": "delete",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "stopJob",
+            "description": "Terminates a running job.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "jobId",
+                    "type": "String",
+                    "info": "Job id",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}/jobs/{$data['jobId']}/stop",
+                "method": "put",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "getJobAssets",
+            "description": "Get details about the static assets collected for a specific job.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "jobId",
+                    "type": "String",
+                    "info": "Job id",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}/jobs/{$data['jobId']}/assets",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "getJobAssetFiles",
+            "description": "Download job assets. After a job completes, all assets created during the job are available via this API. These include the screencast recording, logs, and screenshots taken on crucial steps.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "jobId",
+                    "type": "String",
+                    "info": "Job id",
+                    "required": true
+                },
+                {
+                    "name": "fileName",
+                    "type": "String",
+                    "info": "File name",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}/jobs/{$data['jobId']}/assets/{$data['fileName']}",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "deleteJobAssets",
+            "description": "Delete all the assets captured during a test run. This includes the screencast recording, logs, and all screenshots..",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "jobId",
+                    "type": "String",
+                    "info": "Job id",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}/jobs/{$data['jobId']}/assets",
+                "method": "delete",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "getSauceLabsStatus",
+            "description": "Get the current status of Sauce Labs services.",
+            "args": [],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/info/status",
+                "method": "get"
+            }
+        },
+        {
+            "name": "getSupportedPlatforms",
+            "description": "Get a list of objects describing all the OS and browser platforms currently supported on Sauce Labs. Choose the automation API you need, bearing in mind that WebDriver and Selenium RC are each compatible with a different set of platforms.",
+            "args": [
+                {
+                    "name": "automationApi",
+                    "type": "Select",
+                    "options": [
+                        "all",
+                        "appium",
+                        "webdriver"
+                    ],
+                    "info": "Must be: all, appium, webdriver",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/info/platforms/{$data['automationApi']}",
+                "method": "get"
+            }
+        },
+        {
+            "name": "getAppiumEolDates",
+            "description": "Get a list of Appium end-of-life dates. Dates are displayed in Unix time.",
+            "args": [],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/info/platforms/appium/eol",
+                "method": "get"
+            }
+        },
+        {
+            "name": "uploadFile",
+            "description": "Uploads a file to the temporary sauce storage. The storage will only retain the files for seven days.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "filename",
+                    "type": "String",
+                    "info": "Your file name",
+                    "required": true
+                },
+                {
+                    "name": "fileData",
+                    "type": "File",
+                    "info": "Link to file",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/storage/{$data['username']}/{$data['filename']}?overwrite",
+                "method": "post",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "getStoredFiles",
+            "description": "Check which files are in your temporary storage",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/storage/{$data['username']}",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "getUserConcurrency",
+            "description": "Get account concurrency limits together with current used concurrency and manual testing minutes.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1.1/users/{$data['username']}/concurrency",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "getUserActivity",
+            "description": "Get currently running job counts broken down by account and job status. Results are grouped by the job status for the requesting user and for its subaccounts.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/{$data['username']}/activity",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "getUserAccountUsage",
+            "description": "Access historical account usage data. Returns the total number of jobs and VM time used, in seconds grouped by day.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "start",
+                    "type": "DatePicker",
+                    "info": "Usage for dates not smaller then specified.",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}"
+                    }
+                },
+                {
+                    "name": "end",
+                    "type": "DatePicker",
+                    "info": "Usage for dates not greater then specified.",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/users/{$data['username']}/usage",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "start",
+                            "end"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "getAllTunnels",
+            "description": "Retrieves all running tunnels for a specific user.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/{$data['username']}/tunnels",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "getSingleTunnel",
+            "description": "Get information for a tunnel given its ID.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "tunnelId",
+                    "type": "String",
+                    "info": "Tunnel id",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/{$data['username']}/tunnels/{$data['tunnelId']}",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "getTunnelRunningJobs",
+            "description": "Get the number of jobs that are running through the tunnel over the past 60 seconds.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "tunnelId",
+                    "type": "String",
+                    "info": "Tunnel id",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/{$data['username']}/tunnels/{$data['tunnelId']}/num_job",
+                "method": "get",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        },
+        {
+            "name": "deleteTunnel",
+            "description": "Shuts down a tunnel given its ID.",
+            "args": [
+                {
+                    "name": "username",
+                    "type": "credentials",
+                    "info": "Username string",
+                    "required": true
+                },
+                {
+                    "name": "accessKey",
+                    "type": "String",
+                    "info": "Your saucelabs access key.",
+                    "required": true
+                },
+                {
+                    "name": "tunnelId",
+                    "type": "String",
+                    "info": "Tunnel id",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https://saucelabs.com/rest/v1/{$data['username']}/tunnels/{$data['tunnelId']}",
+                "method": "delete",
+                "auth": {
+                    "username": "{$data['username']}",
+                    "password": "{$data['accessKey']}"
+                }
+            }
+        }
+    ]
+}
