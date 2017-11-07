@@ -43,7 +43,7 @@ $app->post('/api/SauceLabs/getTunnelRunningJobs', function ($request, $response)
         } else {
             $result['callback'] = 'error';
             $result['contextWrites']['to']['status_code'] = 'API_ERROR';
-            $result['contextWrites']['to']['status_msg'] = json_decode($responseBody);
+            $result['contextWrites']['to']['status_msg'] = 'Tunnel Running Jobs not found!';
         }
 
     } catch (\GuzzleHttp\Exception\ClientException $exception) {
