@@ -30,6 +30,11 @@ $app->post('/api/SauceLabs/updateJob', function ($request, $response) {
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = [];
     $requestParams["auth"] = [$data['username'],$data['accessKey']];
+    if(isset($requestParams['json']['passed']) && $requestParams['json']['passed'] == "true") {
+        $requestParams['json']['passed'] = true;
+    } else {
+        $requestParams['json']['passed'] = false;
+    }
 
     try {
         $resp = $client->put($query_str, $requestParams);
